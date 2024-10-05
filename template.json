@@ -1,0 +1,246 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_UserAPP5_name": {
+            "defaultValue": "UserAPP5",
+            "type": "String"
+        },
+        "serverfarms_ASP_UserAPP5_88d7_externalid": {
+            "defaultValue": "/subscriptions/c8597717-1ffc-46f5-beac-bc11b4d2d7fb/resourceGroups/VanithaAruchamy-RG/providers/Microsoft.Web/serverfarms/ASP-UserAPP5-88d7",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2023-12-01",
+            "name": "[parameters('sites_UserAPP5_name')]",
+            "location": "South India",
+            "kind": "functionapp",
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "userapp5.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "userapp5.scm.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[parameters('serverfarms_ASP_UserAPP5_88d7_externalid')]",
+                "reserved": false,
+                "isXenon": false,
+                "hyperV": false,
+                "dnsConfiguration": {},
+                "vnetRouteAllEnabled": false,
+                "vnetImagePullEnabled": false,
+                "vnetContentShareEnabled": false,
+                "siteConfig": {
+                    "numberOfWorkers": 1,
+                    "acrUseManagedIdentityCreds": false,
+                    "alwaysOn": false,
+                    "http20Enabled": false,
+                    "functionAppScaleLimit": 200,
+                    "minimumElasticInstanceCount": 0
+                },
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": false,
+                "clientCertEnabled": false,
+                "clientCertMode": "Required",
+                "hostNamesDisabled": false,
+                "vnetBackupRestoreEnabled": false,
+                "customDomainVerificationId": "283012CC34C779476AC8DB2E7D5EC35041D6E146070719FA2E991B8B2196C832",
+                "containerSize": 1536,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": false,
+                "redundancyMode": "None",
+                "storageAccountRequired": false,
+                "keyVaultReferenceIdentity": "SystemAssigned"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+            "apiVersion": "2023-12-01",
+            "name": "[concat(parameters('sites_UserAPP5_name'), '/ftp')]",
+            "location": "South India",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_UserAPP5_name'))]"
+            ],
+            "properties": {
+                "allow": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+            "apiVersion": "2023-12-01",
+            "name": "[concat(parameters('sites_UserAPP5_name'), '/scm')]",
+            "location": "South India",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_UserAPP5_name'))]"
+            ],
+            "properties": {
+                "allow": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2023-12-01",
+            "name": "[concat(parameters('sites_UserAPP5_name'), '/web')]",
+            "location": "South India",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_UserAPP5_name'))]"
+            ],
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php"
+                ],
+                "netFrameworkVersion": "v6.0",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "httpLoggingEnabled": false,
+                "acrUseManagedIdentityCreds": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$UserAPP5",
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false
+                    }
+                ],
+                "loadBalancing": "LeastRequests",
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "autoHealEnabled": false,
+                "vnetRouteAllEnabled": false,
+                "vnetPrivatePortsCount": 0,
+                "localMySqlEnabled": false,
+                "ipSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 2147483647,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 2147483647,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictionsUseMain": false,
+                "http20Enabled": false,
+                "minTlsVersion": "1.2",
+                "scmMinTlsVersion": "1.2",
+                "ftpsState": "FtpsOnly",
+                "preWarmedInstanceCount": 0,
+                "functionAppScaleLimit": 200,
+                "functionsRuntimeScaleMonitoringEnabled": false,
+                "minimumElasticInstanceCount": 0,
+                "azureStorageAccounts": {}
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2023-12-01",
+            "name": "[concat(parameters('sites_UserAPP5_name'), '/3226ac24b4ef4517bf553f8dc49d60b4')]",
+            "location": "South India",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_UserAPP5_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "ms-azuretools-vscode",
+                "deployer": "ms-azuretools-vscode",
+                "message": "Created via a push deployment",
+                "start_time": "2024-10-05T06:50:26.8107893Z",
+                "end_time": "2024-10-05T06:50:28.5300509Z",
+                "active": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/functions",
+            "apiVersion": "2023-12-01",
+            "name": "[concat(parameters('sites_UserAPP5_name'), '/userApi')]",
+            "location": "South India",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_UserAPP5_name'))]"
+            ],
+            "properties": {
+                "script_href": "https://userapp5.azurewebsites.net/admin/vfs/site/wwwroot/userApi.js",
+                "test_data_href": "https://userapp5.azurewebsites.net/admin/vfs/data/Functions/sampledata/userApi.dat",
+                "href": "https://userapp5.azurewebsites.net/admin/functions/userApi",
+                "config": {
+                    "name": "userApi",
+                    "entryPoint": "",
+                    "scriptFile": "userApi.js",
+                    "language": "node",
+                    "functionDirectory": "C:\\home\\site\\wwwroot\\dist\\src\\functions",
+                    "bindings": [
+                        {
+                            "methods": [
+                                "GET",
+                                "POST",
+                                "PUT",
+                                "DELETE",
+                                "OPTIONS"
+                            ],
+                            "authLevel": "anonymous",
+                            "type": "httpTrigger",
+                            "name": "httpTrigger3d4862e200",
+                            "direction": "in"
+                        },
+                        {
+                            "type": "http",
+                            "name": "$return",
+                            "direction": "out"
+                        }
+                    ]
+                },
+                "invoke_url_template": "https://userapp5.azurewebsites.net/api/userapi",
+                "language": "node",
+                "isDisabled": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2023-12-01",
+            "name": "[concat(parameters('sites_UserAPP5_name'), '/', parameters('sites_UserAPP5_name'), '.azurewebsites.net')]",
+            "location": "South India",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_UserAPP5_name'))]"
+            ],
+            "properties": {
+                "siteName": "UserAPP5",
+                "hostNameType": "Verified"
+            }
+        }
+    ]
+}

@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "value": "c8597717-1ffc-46f5-beac-bc11b4d2d7fb"
+        },
+        "name": {
+            "value": "appUser510"
+        },
+        "location": {
+            "value": "SouthIndia"
+        },
+        "ftpsState": {
+            "value": "FtpsOnly"
+        },
+        "storageAccountName": {
+            "value": "VanithaAruchamyUser510"
+        },
+        "sku": {
+            "value": "Dynamic"
+        },
+        "skuCode": {
+            "value": "Y1"
+        },
+        "workerSize": {
+            "value": "0"
+        },
+        "workerSizeId": {
+            "value": "0"
+        },
+        "numberOfWorkers": {
+            "value": "1"
+        },
+        "use32BitWorkerProcess": {
+            "value": true
+        },
+        "netFrameworkVersion": {
+            "value": "v6.0"
+        },
+        "hostingPlanName": {
+            "value": "ASP-UserApp"
+        },
+        "serverFarmResourceGroup": {
+            "value": "VanithaAruchamy-RG"
+        },
+        "alwaysOn": {
+            "value": false
+        }
+    }
+}
